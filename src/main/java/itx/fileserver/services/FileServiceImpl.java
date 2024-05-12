@@ -2,6 +2,7 @@ package itx.fileserver.services;
 
 import itx.fileserver.config.FileServerConfig;
 import itx.fileserver.dto.*;
+import itx.fileserver.services.FileUtils.OperationMode;
 import itx.fileserver.services.compression.*;
 import itx.fileserver.services.data.AuditService;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
-import itx.fileserver.services.FileUtils.OperationMode;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;

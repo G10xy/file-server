@@ -4,8 +4,9 @@ import itx.fileserver.dto.FileList;
 import itx.fileserver.dto.FileStorageInfo;
 import itx.fileserver.dto.ResourceAccessInfo;
 import itx.fileserver.dto.UserData;
-import org.springframework.core.io.Resource;
 import itx.fileserver.services.FileUtils.OperationMode;
+import org.springframework.core.io.Resource;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
