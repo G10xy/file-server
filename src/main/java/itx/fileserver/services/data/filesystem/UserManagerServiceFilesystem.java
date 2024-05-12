@@ -1,11 +1,7 @@
 package itx.fileserver.services.data.filesystem;
 
-import itx.fileserver.dto.UserConfig;
+import itx.fileserver.dto.*;
 import itx.fileserver.services.data.base.UserManagerServiceImpl;
-import itx.fileserver.dto.UserManagerData;
-import itx.fileserver.dto.RoleId;
-import itx.fileserver.dto.UserData;
-import itx.fileserver.dto.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

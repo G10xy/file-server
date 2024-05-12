@@ -1,9 +1,9 @@
 package itx.fileserver.services.data.base;
 
-import itx.fileserver.services.data.UserManagerService;
 import itx.fileserver.dto.RoleId;
 import itx.fileserver.dto.UserData;
 import itx.fileserver.dto.UserId;
+import itx.fileserver.services.data.UserManagerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

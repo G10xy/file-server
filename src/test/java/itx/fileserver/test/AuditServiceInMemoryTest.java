@@ -1,9 +1,9 @@
 package itx.fileserver.test;
 
-import itx.fileserver.services.data.AuditService;
-import itx.fileserver.services.data.inmemory.AuditServiceInmemory;
 import itx.fileserver.dto.AuditQuery;
 import itx.fileserver.dto.AuditRecord;
+import itx.fileserver.services.data.AuditService;
+import itx.fileserver.services.data.inmemory.AuditServiceInmemory;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;

@@ -1,6 +1,9 @@
 package itx.fileserver.test;
 
 import itx.fileserver.config.FileServerConfig;
+import itx.fileserver.dto.RoleId;
+import itx.fileserver.dto.SessionId;
+import itx.fileserver.dto.UserData;
 import itx.fileserver.services.FileAccessService;
 import itx.fileserver.services.FileAccessServiceImpl;
 import itx.fileserver.services.SecurityService;
@@ -11,9 +14,6 @@ import itx.fileserver.services.data.UserManagerService;
 import itx.fileserver.services.data.inmemory.AuditServiceInmemory;
 import itx.fileserver.services.data.inmemory.FileAccessManagerServiceInmemory;
 import itx.fileserver.services.data.inmemory.UserManagerServiceInmemory;
-import itx.fileserver.dto.RoleId;
-import itx.fileserver.dto.SessionId;
-import itx.fileserver.dto.UserData;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

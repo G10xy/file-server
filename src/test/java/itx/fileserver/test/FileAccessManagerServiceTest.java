@@ -1,12 +1,12 @@
 package itx.fileserver.test;
 
 import itx.fileserver.config.FileServerConfig;
-import itx.fileserver.services.data.FileAccessManagerService;
-import itx.fileserver.services.data.filesystem.FileAccessManagerServiceFilesystem;
 import itx.fileserver.dto.FilterAccessManagerData;
-import itx.fileserver.services.data.inmemory.FileAccessManagerServiceInmemory;
 import itx.fileserver.dto.FilterConfig;
 import itx.fileserver.dto.RoleId;
+import itx.fileserver.services.data.FileAccessManagerService;
+import itx.fileserver.services.data.filesystem.FileAccessManagerServiceFilesystem;
+import itx.fileserver.services.data.inmemory.FileAccessManagerServiceInmemory;
 import itx.fileserver.test.mocks.PersistenceServiceImpl;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

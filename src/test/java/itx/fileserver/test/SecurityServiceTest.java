@@ -1,25 +1,22 @@
 package itx.fileserver.test;
 
 import itx.fileserver.config.FileServerConfig;
+import itx.fileserver.dto.RoleId;
+import itx.fileserver.dto.SessionId;
+import itx.fileserver.dto.Sessions;
+import itx.fileserver.dto.UserData;
 import itx.fileserver.services.SecurityService;
 import itx.fileserver.services.SecurityServiceImpl;
 import itx.fileserver.services.data.AuditService;
 import itx.fileserver.services.data.UserManagerService;
 import itx.fileserver.services.data.inmemory.AuditServiceInmemory;
 import itx.fileserver.services.data.inmemory.UserManagerServiceInmemory;
-import itx.fileserver.dto.RoleId;
-import itx.fileserver.dto.SessionId;
-import itx.fileserver.dto.Sessions;
-import itx.fileserver.dto.UserData;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SecurityServiceTest {
 

@@ -1,11 +1,11 @@
 package itx.fileserver.test;
 
+import itx.fileserver.dto.AuditQuery;
+import itx.fileserver.dto.AuditRecord;
 import itx.fileserver.services.data.AuditService;
 import itx.fileserver.services.data.filesystem.AuditServiceFilesystem;
 import itx.fileserver.services.data.filesystem.PersistenceService;
 import itx.fileserver.services.data.inmemory.AuditServiceInmemory;
-import itx.fileserver.dto.AuditQuery;
-import itx.fileserver.dto.AuditRecord;
 import itx.fileserver.test.mocks.PersistenceServiceImpl;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

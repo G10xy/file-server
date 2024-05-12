@@ -1,19 +1,14 @@
 package itx.fileserver.services.data.base;
 
-import itx.fileserver.services.data.FileAccessManagerService;
 import itx.fileserver.dto.AccessType;
 import itx.fileserver.dto.FileAccessFilter;
 import itx.fileserver.dto.FilterConfig;
 import itx.fileserver.dto.RoleId;
+import itx.fileserver.services.data.FileAccessManagerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class FileAccessManagerServiceImpl implements FileAccessManagerService {

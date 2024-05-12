@@ -2,9 +2,9 @@ package itx.fileserver.services.data.filesystem;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import itx.fileserver.services.data.base.AuditQueryFilter;
 import itx.fileserver.dto.AuditQuery;
 import itx.fileserver.dto.AuditRecord;
+import itx.fileserver.services.data.base.AuditQueryFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
