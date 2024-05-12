@@ -1,15 +1,9 @@
 package itx.fileserver.services;
 
 import itx.fileserver.config.FileServerConfig;
+import itx.fileserver.dto.*;
+import itx.fileserver.services.compression.*;
 import itx.fileserver.services.data.AuditService;
-import itx.fileserver.dto.AuditQuery;
-import itx.fileserver.dto.AuditRecord;
-import itx.fileserver.dto.DirectoryInfo;
-import itx.fileserver.dto.FileInfo;
-import itx.fileserver.dto.FileList;
-import itx.fileserver.dto.FileStorageInfo;
-import itx.fileserver.dto.ResourceAccessInfo;
-import itx.fileserver.dto.UserData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +12,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -144,6 +133,35 @@ public class FileServiceImpl implements FileService {
             Files.delete(resolvedFilePath);
         }
         createDeleteAuditRecord(userData, filePath);
+    }
+
+    @Override
+    public void compress(UserData userData, Path sourcePath, Path compressedFilePath) throws OperationNotAllowedException {
+        LOG.info("compressing: {}->{}", sourcePath, compressedFilePath);
+        verifyReadAndWriteAccess(userData, sourcePath);
+        verifyReadAndWriteAccess(userData, compressedFilePath);
+        Path resolvedFilePath = this.fileStorageLocation.resolve(sourcePath).normalize();
+        Path resolvedCompressedPath = this.fileStorageLocation.resolve(compressedFilePath).normalize();
+
+        if (!Files.isRegularFile(resolvedFilePath)) {
+            LOG.error("source must be a regular file");
+            throw new OperationNotAllowedException();
+        }
+        String compressedFilename = resolvedCompressedPath.getFileName().toString();
+        FileCompressor compressor = new FileCompressor();
+        CompressionStrategy strategy;
+
+        String extension =  compressedFilename.substring(compressedFilename.lastIndexOf('.') + 1);
+        strategy = switch (extension) {
+            case "gz" -> new GzipCompressionStrategy();
+            case "zip" -> new ZipCompressionStrategy();
+            case "bz2" -> new Bzip2CompressionStrategy();
+            case "xz" -> new XzCompressionStrategy();
+            default -> throw new IllegalArgumentException("Unsupported compression format: " + extension);
+        };
+
+        compressor.setCompressionStrategy(strategy);
+        compressor.compressFile(resolvedFilePath, resolvedCompressedPath);
     }
 
     @Override
