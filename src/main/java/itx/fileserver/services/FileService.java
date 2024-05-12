@@ -5,7 +5,7 @@ import itx.fileserver.dto.FileStorageInfo;
 import itx.fileserver.dto.ResourceAccessInfo;
 import itx.fileserver.dto.UserData;
 import org.springframework.core.io.Resource;
-
+import itx.fileserver.services.FileUtils.OperationMode;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,11 +90,12 @@ public interface FileService {
     void move(UserData userData, Path sourcePath, Path destinationPath) throws IOException, OperationNotAllowedException;
 
     /**
-     * Move file or directory from source to destination.
+     * Process file to compress it or decompress it to a destination.
      * @param userData user data accessing source and destination.
      * @param sourcePath relative path to source file or directory.
-     * @param compressedFilePath relative path to compressed file or directory.
+     * @param outputFilePath relative path to processed file or directory.
+     * @param mode relative to the kind of process (compress/decompress).
      * @throws OperationNotAllowedException
      */
-    void compress(UserData userData, Path sourcePath, Path compressedFilePath) throws OperationNotAllowedException;
+    void processFile(UserData userData, Path sourcePath, Path outputFilePath, OperationMode mode) throws OperationNotAllowedException;
 }

@@ -227,4 +227,9 @@ public final class FileUtils {
 
     }
 
+    public enum OperationMode {
+        COMPRESS,
+        DECOMPRESS
+    }
+
 }
