@@ -329,6 +329,26 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "Compress file",
+					"request": {
+						"url": "http://localhost:8888/services/files/compress/sourceOfFile",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"compressedFilePath\": \"value\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		}

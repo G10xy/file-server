@@ -80,6 +80,11 @@ See also [postman collection example](docs/FileServer.postman_collection.json).
 * __GET__ http://localhost:8888/services/files/audit/** - get audit data for the resource.
   ``curl -X GET http://localhost:8888/services/files/audit/path/to/source -b /tmp/cookies.txt``
 
+#### Compress file
+* __POST__ http://localhost:8888/services/files/compress/** - compress file to a file with specified compression extension.
+  ``curl -X POST http://localhost:8888/services/files/compress/path/to/source -b /tmp/cookies.txt -d '{ "compressedFilePath": "path/to/destination/of/compressed/file" }''``
+
+
 ### Security
 In order to use file server REST endpoints above, user's http session must be authorized.
 Users have defined their roles and access rights to files and directories. 
