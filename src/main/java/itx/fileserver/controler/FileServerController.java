@@ -2,6 +2,7 @@ package itx.fileserver.controler;
 
 import itx.fileserver.dto.*;
 import itx.fileserver.services.FileService;
+import itx.fileserver.services.FileUtils.OperationMode;
 import itx.fileserver.services.OperationNotAllowedException;
 import itx.fileserver.services.SecurityService;
 import org.slf4j.Logger;
@@ -37,6 +38,7 @@ public class FileServerController {
     public static final String MOVE_PREFIX = "/move/";
     public static final String AUDIT_PREFIX = "/audit/";
     public static final String COMPRESS_PREFIX = "/compress/";
+    public static final String DECOMPRESS_PREFIX = "/decompress/";
 
     private final FileService fileService;
     private final SecurityService securityService;
@@ -176,23 +178,23 @@ public class FileServerController {
         }
     }
 
-    @PostMapping(COMPRESS_PREFIX + "**")
-    public ResponseEntity<Resource> compress(@RequestBody CompressRequest compressRequest) {
+    @PostMapping({COMPRESS_PREFIX + "**", DECOMPRESS_PREFIX + "**"})
+    public ResponseEntity<Resource> processFile(@RequestBody CompressDecompressRequest compressRequest) {
         try {
             String contextPath = httpServletRequest.getRequestURI();
             SessionId sessionId = new SessionId(httpServletRequest.getSession().getId());
             Optional<UserData> userData = securityService.isAuthorized(sessionId);
             if (userData.isPresent()) {
-                Path sourcePath = Paths.get(contextPath.substring((URI_PREFIX + COMPRESS_PREFIX).length()));
-                Path destinationPath = Paths.get(compressRequest.getCompressedFilePath());
-                LOG.info("move: {}->{}", sourcePath, destinationPath);
-                fileService.compress(userData.get(), sourcePath, destinationPath);
+                OperationMode mode = contextPath.startsWith(URI_PREFIX + COMPRESS_PREFIX) ? OperationMode.COMPRESS : OperationMode.DECOMPRESS;
+                Path sourcePath = Paths.get(contextPath.substring((URI_PREFIX + (mode == OperationMode.COMPRESS ? COMPRESS_PREFIX : DECOMPRESS_PREFIX)).length()));
+                Path destinationPath = Paths.get(compressRequest.getProcessedFilePath());
+                fileService.processFile(userData.get(), sourcePath, destinationPath, mode);
                 return ResponseEntity.ok().build();
             }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    } catch (OperationNotAllowedException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (OperationNotAllowedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     @GetMapping(AUDIT_PREFIX + "**")
