@@ -1,13 +1,9 @@
 package itx.fileserver.controler;
 
-import itx.fileserver.dto.MoveRequest;
+import itx.fileserver.dto.*;
 import itx.fileserver.services.FileService;
 import itx.fileserver.services.OperationNotAllowedException;
 import itx.fileserver.services.SecurityService;
-import itx.fileserver.dto.FileList;
-import itx.fileserver.dto.ResourceAccessInfo;
-import itx.fileserver.dto.SessionId;
-import itx.fileserver.dto.UserData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +36,7 @@ public class FileServerController {
     public static final String CREATEDIR_PREFIX = "/createdir/";
     public static final String MOVE_PREFIX = "/move/";
     public static final String AUDIT_PREFIX = "/audit/";
+    public static final String COMPRESS_PREFIX = "/compress/";
 
     private final FileService fileService;
     private final SecurityService securityService;
@@ -183,6 +174,25 @@ public class FileServerController {
         } catch (OperationNotAllowedException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+    }
+
+    @PostMapping(COMPRESS_PREFIX + "**")
+    public ResponseEntity<Resource> compress(@RequestBody CompressRequest compressRequest) {
+        try {
+            String contextPath = httpServletRequest.getRequestURI();
+            SessionId sessionId = new SessionId(httpServletRequest.getSession().getId());
+            Optional<UserData> userData = securityService.isAuthorized(sessionId);
+            if (userData.isPresent()) {
+                Path sourcePath = Paths.get(contextPath.substring((URI_PREFIX + COMPRESS_PREFIX).length()));
+                Path destinationPath = Paths.get(compressRequest.getCompressedFilePath());
+                LOG.info("move: {}->{}", sourcePath, destinationPath);
+                fileService.compress(userData.get(), sourcePath, destinationPath);
+                return ResponseEntity.ok().build();
+            }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    } catch (OperationNotAllowedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
     }
 
     @GetMapping(AUDIT_PREFIX + "**")
