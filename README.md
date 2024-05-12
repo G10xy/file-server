@@ -81,8 +81,12 @@ See also [postman collection example](docs/FileServer.postman_collection.json).
   ``curl -X GET http://localhost:8888/services/files/audit/path/to/source -b /tmp/cookies.txt``
 
 #### Compress file
-* __POST__ http://localhost:8888/services/files/compress/** - compress file to a file with specified compression extension.
-  ``curl -X POST http://localhost:8888/services/files/compress/path/to/source -b /tmp/cookies.txt -d '{ "compressedFilePath": "path/to/destination/of/compressed/file" }''``
+* __POST__ http://localhost:8888/services/files/compress/** - compress file with specified compression extension.
+  ``curl -X POST http://localhost:8888/services/files/compress/path/to/source -b /tmp/cookies.txt -d '{ "processedFilePath": "path/to/destination/of/compressed/file" }''``
+
+#### Decompress file
+* __POST__ http://localhost:8888/services/files/decompress/** - decompress file with specified compression extension.
+  ``curl -X POST http://localhost:8888/services/files/decompress/path/to/source -b /tmp/cookies.txt -d '{ "processedFilePath": "path/to/destination/of/decompressed/file" }''``
 
 
 ### Security

@@ -344,7 +344,27 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"compressedFilePath\": \"value\"\n}"
+							"raw": "{\n\t\"processedFilePath\": \"value\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Decompress file",
+					"request": {
+						"url": "http://localhost:8888/services/files/decompress/sourceOfFile",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"processedFilePath\": \"value\"\n}"
 						},
 						"description": ""
 					},
